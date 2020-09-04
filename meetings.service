@@ -4,7 +4,7 @@ Description=Meetings Assistant
 [Service]
 User=abhigyan
 Type=simple
-ExecStart=/home/abhigyan/Projects/meeting-launcher/hala.py
+ExecStart=/home/abhigyan/Projects/meeting-launcher/meetings_assistant.py
 Restart=on-failure
 
 [Install]
