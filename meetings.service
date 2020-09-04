@@ -1,0 +1,11 @@
+[Unit]
+Description=Meetings Assistant
+
+[Service]
+User=abhigyan
+Type=simple
+ExecStart=/home/abhigyan/Projects/meeting-launcher/hala.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
