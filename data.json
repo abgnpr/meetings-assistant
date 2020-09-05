@@ -1,0 +1,18 @@
+{
+  "myName": "22 Abhigyan",
+
+  "meetings": {
+     
+    "09:00": {
+      "name": "Programming in VB",
+      "id": "2813176975",
+      "pswd": "2sE3tL"
+    },
+
+    "10:00": {
+      "name": "OOP in Java",
+      "id": "7709185120",
+      "pswd": "ANCP@13"
+    }
+  }
+}
