@@ -21,8 +21,3 @@ def timeNow():
     h = str(h) if h > 9 else '0' + str(h)
     m = str(m) if m > 9 else '0' + str(m)
     return f'{h}:{m}'
-
-
-def copyToClipboard(text):
-    echo = Popen(['echo', text], stdout=PIPE)
-    Popen(['xclip', '-sel', 'clip'], stdin=echo.stdout)

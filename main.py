@@ -1,50 +1,67 @@
 #!/usr/bin/env python3
 
-import os
 import notify2
+import environment
 from json import load
 from sched import scheduler
+from utility import timeNow
 from time import time, sleep
-from utility import timeNow, copyToClipboard
+from assistant import AssistantWindow
 
-os.chdir(os.path.dirname(os.path.realpath(__file__)))
-os.environ.setdefault('DISPLAY', ':0')
-os.environ.setdefault('XAUTHORITY', '/run/user/1000/gdm/Xauthority')
-os.environ.setdefault('DBUS_SESSION_BUS_ADDRESS',
-                      'unix:path=/run/user/1000/bus')
 
-myName = ''
-meetingURLBase = ''
-meetings = {}
+""" global declarations """
+
+# Attendee's name
+attendeeName = 'User'
+
+# stores meeting objects  indexed by meeting time
+meetings = {} 
+
 
 def readMeetingsData():
+    """ reads the meeting schedule from `data.json` """
+    global attendeeName, meetings
     with open('data.json') as jsonData:
         data = load(jsonData)
-    global myName, meetings
-    myName = data['myName']
+    attendeeName = data['attendee-name']
     meetings = data['meetings']
 
 
 def notify(meeting):
+    """ generates meeting notification """
     notify2.init('Meetings Assistant')
     notify2.Notification(
-      'Off to the meeting!', meeting['name']
+        'Meeting Reminder', meeting['name']
     ).show()
 
 
-# mainloop: 
-# checks for meetings every minute
-# launches if one scheduled
+# test
+readMeetingsData()
+notify(meetings['09:00'])
+AssistantWindow(meeting=meetings['09:00'], attendeeName=attendeeName).show()
+exit()
+
+
+""" mainloop configuration """
 p = 1  # priority
-interval = 60 #sec
-sch = scheduler(time, sleep)
+interval = 60  # sec
+sch = scheduler(time, sleep) # init scheduler
+
+
 def mainloop(s):
+    """
+    checks for meetings every minute and 
+    launches meeting assistant if one is 
+    scheduled for current time
+    """
     readMeetingsData()
     t = timeNow()
     if t in meetings.keys():
-        launch()
+        notify(meetings[t])
+        AssistantWindow(meeting=meetings[t], attendeeName=attendeeName).show()
     sch.enter(interval, p, mainloop, (s,))
 
 
+""" start mainloop() """
 sch.enter(interval, p, mainloop, (sch,))
 # sch.run()
