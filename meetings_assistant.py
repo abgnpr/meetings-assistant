@@ -1,32 +1,25 @@
 #!/usr/bin/env python3
 
 import os
-from time import time, sleep
-from sched import scheduler
-from datetime import datetime
-from json import load
-from subprocess import Popen, PIPE, DEVNULL
 import notify2
+from json import load
+from sched import scheduler
+from time import time, sleep
+from webbrowser import open_new
+from logger_prompt import showLoggerPrompt
+from utility import timeNow, copyToClipboard
 
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
-
-myName = ''
-meetingURLBase = ''
-meetings = {}
-pswdPromptDelay = 0
-
 os.environ.setdefault('DISPLAY', ':0')
 os.environ.setdefault('XAUTHORITY', '/run/user/1000/gdm/Xauthority')
 os.environ.setdefault('DBUS_SESSION_BUS_ADDRESS',
                       'unix:path=/run/user/1000/bus')
 
-
-def timeNow():
-    h = datetime.now().hour
-    m = datetime.now().minute
-    h = str(h) if h > 9 else '0' + str(h)
-    m = str(m) if m > 9 else '0' + str(m)
-    return h + ':' + m
+# globals
+myName = ''
+meetingURLBase = ''
+meetings = {}
+pswdPromptDelay = 0
 
 
 def readData():
@@ -39,37 +32,35 @@ def readData():
     pswdPromptDelay = data['pswdPromptDelay']
 
 
-def launch(meetingURL):
-    Popen(['xdg-open', meetingURL], stdout=DEVNULL, stderr=DEVNULL)
-
-
-def terminal(): # todo - prompt
-    Popen(['gnome-terminal', '--', './hi.py'])
-
-
-def copyToClipboard(text):
-    echo = Popen(['echo', text], stdout=PIPE)
-    Popen(['xclip', '-sel', 'clip'], stdin=echo.stdout)
+def launch(t):
+    notify2.init('Meetings Assistant')
+    notify2.Notification('Off to the meeting!', meetings[t]['name']).show()
+    open_new(meetingURLBase + meetings[t]['id'])
+    copyToClipboard(myName)
+    sleep(pswdPromptDelay)
+    copyToClipboard(meetings[t]['pswd'])
+    sleep(60)
+    showLoggerPrompt(meetings[t]['name'])
 
 
 sch = scheduler(time, sleep)
 interval = 60  # sec
 p = 1  # priority
 
-
+# loop to check for meetings every minute
 def loop(s):
     readData()
     t = timeNow()
     if t in meetings.keys():
-        launch(meetingURLBase + meetings[t]['id'])
-        notify2.init('Meetings Assistant')
-        notify2.Notification('Off to the meeting!', 'Haha').show()
-        copyToClipboard(myName)
-        sleep(pswdPromptDelay)
-        copyToClipboard(meetings[t]['pswd'])
-
+        launch(t)
     sch.enter(interval, p, loop, (s,))
 
 
-sch.enter(interval, p, loop, (sch,))
-sch.run()
+def main():
+    sch.enter(interval, p, loop, (sch,))
+    sch.run()
+
+
+# main()
+readData()
+launch('09:00')
