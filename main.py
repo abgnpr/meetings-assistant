@@ -1,60 +1,49 @@
 #!/usr/bin/env python3
 
-import notify2
 import environment
 from json import load
 from sched import scheduler
-from utility import timeNow
 from time import time, sleep
+from utility import timeNow, notify
 from assistant import AssistantWindow
 
 
 """ global declarations """
-
-# Attendee's name
-attendeeName = 'User'
-
-# stores meeting objects  indexed by meeting time
-meetings = {} 
+attendeeName = 'User'  # attendee's name
+meetings = {}  # stores meeting objects indexed by meeting time
+dataFile = 'data.json'
 
 
-def readMeetingsData():
-    """ reads the meeting schedule from `data.json` """
+def readData():
+    """ reads the attendee name & meetings schedule from `data.json` """
     global attendeeName, meetings
-    with open('data.json') as jsonData:
+    with open(dataFile) as jsonData:
         data = load(jsonData)
     attendeeName = data['attendee-name']
     meetings = data['meetings']
 
 
-def notify(meeting):
-    """ generates meeting notification """
-    notify2.init('Meetings Assistant')
-    notify2.Notification(
-        'Meeting Reminder', meeting['name']
-    ).show()
-
-
-# test
-readMeetingsData()
-notify(meetings['09:00'])
-AssistantWindow(meeting=meetings['09:00'], attendeeName=attendeeName).show()
-exit()
+# un-comment to test a sample meeting
+# dataFile = 'sampledata.json'
+# readData()
+# notify(meetings['09:00'])
+# AssistantWindow(meeting=meetings['09:00'], attendeeName=attendeeName).show()
+# exit()
 
 
 """ mainloop configuration """
 p = 1  # priority
 interval = 60  # sec
-sch = scheduler(time, sleep) # init scheduler
+sch = scheduler(time, sleep)  # init scheduler
 
 
 def mainloop(s):
     """
     checks for meetings every minute and 
     launches meeting assistant if one is 
-    scheduled for current time
+    scheduled for the current time
     """
-    readMeetingsData()
+    readData()
     t = timeNow()
     if t in meetings.keys():
         notify(meetings[t])
@@ -64,4 +53,4 @@ def mainloop(s):
 
 """ start mainloop() """
 sch.enter(interval, p, mainloop, (sch,))
-# sch.run()
+sch.run()

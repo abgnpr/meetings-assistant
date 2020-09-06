@@ -1,18 +1,20 @@
 {
-  "attendee-name": "22 Abhigyan",
-
+  "attendee-name": "My Good Name",
   "meetings": {
-     
-    "09:00": {
-      "name": "Programming in VB",
-      "id": "2813176975",
-      "pswd": "2sE3tL"
+  /*
+    
+    "09:45": {
+      "name": "My Meeting Name",
+      "id": "1234567894",
+      "pswd": "abc@123"
     },
 
-    "10:00": {
-      "name": "OOP in Java",
-      "id": "7709185120",
-      "pswd": "ANCP@13"
-    }
+    "HH:MM" : {}, 
+
+    "HH:MM" : {},
+
+    ... more meetings
+    
+  */
   }
 }
