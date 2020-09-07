@@ -19,3 +19,5 @@ def log(meetingName, attendance):
         logger.writerow([
             dateToday(), weekDayToday(), timeNow(), meetingName, attendance
         ])
+
+# TODO: add error handling

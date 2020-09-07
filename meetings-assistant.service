@@ -1,10 +1,11 @@
 [Unit]
 Description=Meetings Assistant
+After=basic.target graphical.target local.fs.target paths.target sysinit.target time-sync.target timers.target 
 
 [Service]
 User=abhigyan
 Type=simple
-ExecStart=/home/abhigyan/Projects/meeting-launcher/meetings_assistant.py
+ExecStart=/home/abhigyan/Projects/meetings-assistant/main.py
 Restart=on-failure
 
 [Install]

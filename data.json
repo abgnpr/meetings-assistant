@@ -1,20 +1,18 @@
 {
-  "attendee-name": "My Good Name",
+  "attendee-name": "John Doe",
+
   "meetings": {
-  /*
-    
-    "09:45": {
-      "name": "My Meeting Name",
-      "id": "1234567894",
-      "pswd": "abc@123"
+     
+    "09:00": {
+      "name": "Sample Meeting 1",
+      "id": "2813176975",
+      "pswd": "XXXXXX"
     },
 
-    "HH:MM" : {}, 
-
-    "HH:MM" : {},
-
-    ... more meetings
-    
-  */
+    "16:35": {
+      "name": "Sample Meeting 2",
+      "id": "7709185120",
+      "pswd": "YYYYY"
+    }
   }
 }

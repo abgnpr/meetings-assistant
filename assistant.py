@@ -3,23 +3,33 @@ from tkinter import Tk, Frame, Label, Button, TRUE, LEFT, RIGHT, X, Y
 from logger import log
 from webbrowser import open_new
 
-tkRoot = Tk()
-
-# keep on top of other windows until dismissed
-tkRoot.call('wm', 'attributes', '.', '-topmost', '1')
-
 
 class AssistantWindow(Frame):
-    """ assistant console """
+    """ tkinter GUI to assist in attending meetings """
 
-    def __init__(self, master=tkRoot, meeting={}, attendeeName='Username'):
-        super().__init__(master)
-        self.master = master
+    def __init__(self, meeting={}, attendeeName='Username'):
+        self.master = Tk()
+        # keep on top of other windows until dismissed
+        self.master.call('wm', 'attributes', '.', '-topmost', '1')
+        super().__init__(self.master)
+
         self.meeting = meeting
         self.attendeeName = attendeeName
+        
         self.pack()
-        self.init()
+        self.setup()
         self.copyAttendeeToClip()
+        self.show()
+
+
+    def show(self):
+        """ displays the assistant console """
+        self.mainloop()
+
+
+    def close(self):
+        """ closes the assistant window """
+        self.master.destroy()
 
 
     def openBrowser(self):
@@ -47,16 +57,18 @@ class AssistantWindow(Frame):
     def logPresence(self):
         """ marks meeting attendance as present 'P' """
         log(self.meeting['name'], 'P')
-        self.master.destroy()
+        self.close()
 
 
     def logAbsence(self):
         """ marks meeting attendance as absent 'A' """
         log(self.meeting['name'], 'A')
-        self.master.destroy()
+        self.close()
 
 
-    def init(self):
+    def setup(self):
+        """ prepare the widget layout """
+
         """ set window title """
         self.master.title('Meetings Assistant')
         
@@ -103,10 +115,6 @@ class AssistantWindow(Frame):
         self.notAttending = Button(self.bottom, text="Not attending", bg="red", command=self.logAbsence)
         self.notAttending.pack(side=LEFT, expand=TRUE)
         
-        self.noUpdate = Button(self.bottom, text="Don't update", command=self.master.destroy)
+        self.noUpdate = Button(self.bottom, text="Don't log", command=self.close)
         self.noUpdate.pack(side=LEFT, expand=TRUE)
 
-
-    def show(self):
-        """ displays the assistant console """
-        self.mainloop()

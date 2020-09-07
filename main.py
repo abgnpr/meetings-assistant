@@ -2,10 +2,10 @@
 
 import environment
 from json import load
-from sched import scheduler
-from time import time, sleep
+from threading import Event
 from utility import timeNow, notify
 from assistant import AssistantWindow
+from multiprocessing import Process, set_start_method
 
 
 """ global declarations """
@@ -23,34 +23,30 @@ def readData():
     meetings = data['meetings']
 
 
-# un-comment to test a sample meeting
-# dataFile = 'sampledata.json'
-# readData()
-# notify(meetings['09:00'])
-# AssistantWindow(meeting=meetings['09:00'], attendeeName=attendeeName).show()
-# exit()
+# driver
+if __name__ == "__main__":
 
+    set_start_method('fork')
+    # this is a unix exclusive multiprocessing start method
+    # make AssistantWindow work with set_start_method('spawn') 
+    # to enable platform independance
 
-""" mainloop configuration """
-p = 1  # priority
-interval = 60  # sec
-sch = scheduler(time, sleep)  # init scheduler
-
-
-def mainloop(s):
-    """
+    """ Interval Loop:
     checks for meetings every minute and 
     launches meeting assistant if one is 
     scheduled for the current time
     """
-    readData()
-    t = timeNow()
-    if t in meetings.keys():
-        notify(meetings[t])
-        AssistantWindow(meeting=meetings[t], attendeeName=attendeeName).show()
-    sch.enter(interval, p, mainloop, (s,))
-
-
-""" start mainloop() """
-sch.enter(interval, p, mainloop, (sch,))
-sch.run()
+    e = Event()
+    interval = 60  # sec
+    while not e.wait(interval):
+        readData()
+        t = timeNow()
+        if t in meetings.keys():
+            notify(meetings[t])
+            # start AssistantWindow as a new process
+            aw = Process(
+                target=AssistantWindow,
+                args=(meetings[t], attendeeName)
+            )
+            aw.start()
+            aw.join()  # wait for assistant window to terminate
