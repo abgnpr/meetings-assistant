@@ -1,4 +1,4 @@
-import environment
+import environment_setup
 from tkinter import Tk, Frame, Label, Button, TRUE, LEFT, RIGHT, X, Y
 from logger import log
 from webbrowser import open_new

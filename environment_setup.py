@@ -1,7 +1,9 @@
 import os
 
+
 # change to current director
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
+
 
 # environment variables needed to run
 # in system mode (root) on linux.
@@ -15,3 +17,7 @@ os.environ.setdefault('DBUS_SESSION_BUS_ADDRESS',
 #       for your system. Replace them here if needed. You
 #       may use commands `env` or `printenv` in user mode
 #       to view the environment variables for your system
+
+
+# maybe required somewhere in future
+env = os.environ

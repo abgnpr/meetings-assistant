@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-import environment
 from json import load
+import environment_setup
 from threading import Event
-from utility import timeNow, notify
 from assistant import AssistantWindow
+from utility import timeNow, weekDayToday, notify
 from multiprocessing import Process, set_start_method
 
 
@@ -27,9 +27,9 @@ def readData():
 if __name__ == "__main__":
 
     set_start_method('fork')
-    # this is a unix exclusive multiprocessing start method
-    # make AssistantWindow work with set_start_method('spawn') 
-    # to enable platform independance
+    # this is a unix exclusive multiprocessing start method.
+    # Make AssistantWindow work with set_start_method('spawn')
+    # to enable platform independance.
 
     """ Interval Loop:
     checks for meetings every minute and 
@@ -39,10 +39,19 @@ if __name__ == "__main__":
     e = Event()
     interval = 60  # sec
     while not e.wait(interval):
+        
+        # read data.json
         readData()
+        
         t = timeNow()
-        if t in meetings.keys():
+        if t in meetings.keys() and (
+            weekDayToday() in meetings[t]['days']
+            or meetings[t]['days'].lower() == 'everyday'
+        ):
+            
+            # notify about the meeting
             notify(meetings[t])
+            
             # start AssistantWindow as a new process
             aw = Process(
                 target=AssistantWindow,
