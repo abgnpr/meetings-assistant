@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 
-from os import environ, path
+from os import environ, path, chmod
 
+service_file = 'meetings_assistant.service'
 user = environ.get('USER')
 current_directory = path.dirname(path.realpath(__file__))
 
-with open('meetings.service', 'w') as d:
-    d.writelines(
+with open(service_file, 'w') as sf:
+    sf.writelines(
         f'[Unit]\n\
 Description=Meetings Assistant\n\
-After=basic.target graphical.target local.fs.target paths.target sysinit.target time-sync.target timers.target\n\
+After=graphical.target\n\
 [Service]\n\
 User={user}\n\
 Type=simple\n\
@@ -18,3 +19,5 @@ Restart=on-failure\n\
 [Install]\n\
 WantedBy=multi-user.target\n'
     )
+
+chmod(service_file, 420)  # 644 in octal
