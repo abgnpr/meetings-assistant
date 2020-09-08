@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import notify2
+from notify2 import init, Notification
 import environment
 from yaml import safe_load
 from threading import Event
@@ -26,10 +26,10 @@ def readData():
 
 def notify(meeting):
     """ generates meeting notification """
-    notify2.init('Meetings Assistant')
-    notify2.Notification(
-        'Meeting Reminder', meeting['name'],
-        icon='images/zoom-icon.png'
+    init('Meetings Assistant')
+    Notification(
+        summary='Meeting Reminder', 
+        message=meeting['name']
     ).show()
 
 
@@ -47,17 +47,14 @@ if __name__ == "__main__":
     scheduled for the current time & day
     """
     e = Event()
-    interval = 6  # sec
+    interval = 60  # sec
     while not e.wait(interval):
 
         # read data.json
         readData()
 
-        # t = timeNow()
-        # d = weekDayToday()
-
-        t = '04:15'
-        d = 'Tuesday'
+        t = timeNow()
+        d = weekDayToday()
 
         for meeting in meetings:
             if t == meeting['time'] and (
