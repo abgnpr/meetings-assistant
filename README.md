@@ -1,46 +1,81 @@
 # Meetings assistant
 
-A service that notifies and assist in attending your daily meetings.
+A service that notifies about, and assists in attending, your daily online meetings.
 
-OS - linux
+Platform: Linux _(graphical ones)_
 
 ![Overview](images/overview.svg)
 
 ## Installation
 
-- Installing python
+- python (a distribution that supports `tkinter`)
 
-  ```py
+  ```bash
   sudo apt-get install python3-tk
   ```
 
-## Daemonizing
+- scripts
 
-meetings-assistant.service
+  ```bash
+  git clone ---
+  cd meetings-assistant
+  pip3 install -r requirements.txt
+  ```
 
-TODO: Test if we need to cut things
+- service
 
-owner mode : `644`
+  ```bash
+  ./installer.sh --install
+  ```
 
-location: `/etc/systemd/system/`
+- check status
 
-Setup
+  ```bash
+  systemctl status meetings-assistant
+  ```
 
-```bash
-cd /path/to/meetings-assistant/
-sudo cp ./meetings-assistant.service /etc/systemd/system/.
-chmod 644 /etc/systemd/system/meetings-assistant.service
-sudo systemctl daemon-reload
-sudo systemctl enable meetings-assistant
-sudo systemctl start meetings-assistant
+## Schedule your meetings
+
+**`data.yaml`**
+
+A dictionary of meetings keyed by meeting time.
+
+```yaml
+attendee-name: John Doe
+
+meetings:
+
+	09:00:
+		name: Sample meeting 1
+		id: 2813176975
+		pswd: xxxxxx
+		days:
+			- Monday
+			- Wednesday
+			- Friday
+
+	10:30:
+		name: Sample meeting 2
+		id: 7709185120
+		pswd: yyyyyyy
+		days: everyday
+
+
+	# ... and more
 ```
 
-Check status
+**Notes**
 
-```bash
-systemctl status meetings-assistant
-```
+- Meeting times must be 4 digit representations `HH:MM`.
+  Preceding 0s for single digit hours and minutes are necessary.
 
-## TODO
-
-- add week days
+- Valid values for `days`
+  - list<br>
+    `- Monday`<br>
+    `- Tuesday`<br>
+    `...`<br>
+    `- Sunday`<br>
+  - array
+    `[ Monday, Tuesday, ..., Sunday ]`
+  - string
+    `everyday` or `Everyday`
