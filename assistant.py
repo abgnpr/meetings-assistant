@@ -34,7 +34,7 @@ class AssistantWindow(Frame):
 
     def openBrowser(self):
         """ opens the browser with meeting url and id """
-        webbrowser.open('https://zoom.us/wc/join/' + self.meeting['id'], autoraise=True)
+        webbrowser.open_new_tab('https://zoom.us/wc/join/' + str(self.meeting['id']))
         self.join.configure(text="Join again ↻")
 
 
