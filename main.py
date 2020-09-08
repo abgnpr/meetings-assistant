@@ -37,7 +37,7 @@ if __name__ == "__main__":
     scheduled for the current time & day
     """
     e = Event()
-    interval = 2  # sec
+    interval = 60  # sec
     while not e.wait(interval):
 
         # read data.json
