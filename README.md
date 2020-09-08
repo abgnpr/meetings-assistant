@@ -117,4 +117,4 @@ Attendance sheet **`attendance-log.csv`** can be found inside `meetings-assistan
 
 ## Test
 
-To test if its working, schedule a test meeting in the next 1-2 minutes and see if the Assistant Window shows up.
+To test if it's working, schedule a test meeting in the next 1-2 minutes and see if the Assistant Window shows up.
