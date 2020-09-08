@@ -13,13 +13,13 @@ meetings:
     - name: Sample meeting 2
       id: 7709185120
       pswd: yyyyyyy
-      time: '10:30'
+      time: '10:05'
       days: everyday
 
-    - name: Sample meeting 2
+    - name: Sample meeting 3
       id: 7709185120
       pswd: yyyyyyy
-      time: '4:45'
+      time: '04:15'
       days: ['Tuesday', 'Thursday'] # quotes necessary !
     
     # ... add more
