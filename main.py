@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-# from json import load
 import environment
 from yaml import safe_load
 from threading import Event
