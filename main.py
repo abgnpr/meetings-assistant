@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from json import load
-import environment_setup
+import environment
 from threading import Event
 from assistant import AssistantWindow
 from utility import timeNow, weekDayToday, notify
