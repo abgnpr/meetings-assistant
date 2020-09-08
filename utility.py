@@ -1,4 +1,3 @@
-import notify2
 from datetime import datetime
 from calendar import day_name
 
@@ -24,11 +23,3 @@ def timeNow():
     h = str(h) if h > 9 else '0' + str(h)
     m = str(m) if m > 9 else '0' + str(m)
     return f'{h}:{m}'
-
-
-def notify(meeting):
-    """ generates meeting notification """
-    notify2.init('Meetings Assistant')
-    notify2.Notification(
-        'Meeting Reminder', meeting['name']
-    ).show()

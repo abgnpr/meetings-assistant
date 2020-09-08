@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
+import notify2
 import environment
 from yaml import safe_load
 from threading import Event
 from assistant import AssistantWindow
-from utility import timeNow, weekDayToday, notify
+from utility import timeNow, weekDayToday
 from multiprocessing import Process, set_start_method
 
 
@@ -23,6 +24,15 @@ def readData():
     meetings = data['meetings']
 
 
+def notify(meeting):
+    """ generates meeting notification """
+    notify2.init('Meetings Assistant')
+    notify2.Notification(
+        'Meeting Reminder', meeting['name'],
+        icon='images/zoom-icon.png'
+    ).show()
+
+
 # driver
 if __name__ == "__main__":
 
@@ -37,22 +47,25 @@ if __name__ == "__main__":
     scheduled for the current time & day
     """
     e = Event()
-    interval = 60  # sec
+    interval = 6  # sec
     while not e.wait(interval):
 
         # read data.json
         readData()
 
-        t = timeNow()
-        d = weekDayToday()
+        # t = timeNow()
+        # d = weekDayToday()
+
+        t = '04:15'
+        d = 'Tuesday'
 
         for meeting in meetings:
             if t == meeting['time'] and (
                 (
-                    type(meeting['days']) == list 
+                    type(meeting['days']) == list
                     and d in meeting['days']
                 ) or (
-                    type(meeting['days']) == str 
+                    type(meeting['days']) == str
                     and meeting['days'].lower() == 'everyday'
                 )
             ):
