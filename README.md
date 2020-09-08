@@ -89,7 +89,7 @@ meetings:
   - name: Sample meeting 1
     id: 2813176975
     pswd: xxxxxx
-    time: "09:00" # <---- quotes important!
+    time: '09:00' # <---- quotes important!
     days:
       - Monday
       - Wednesday
@@ -98,14 +98,14 @@ meetings:
   - name: Sample meeting 2
     id: 7709185120
     pswd: yyyyyyy
-    time: "10:30"
+    time: '10:30'
     days: everyday
 
   - name: Sample meeting 3
     id: 7709185120
     pswd: zzzzzzz
-    time: "04:15"
-    days: ["Tuesday", "Thursday"] # <---- quotes important!
+    time: '04:15'
+    days: ['Tuesday', 'Thursday'] # <---- quotes important!
 
 
   #  ... add more
