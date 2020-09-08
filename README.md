@@ -40,7 +40,7 @@ When it's time for a meeting,
 - scripts
 
   ```bash
-  git clone ---
+  git clone https://github.com/mountAP/meetings-assistant.git
   cd meetings-assistant
   pip3 install -r requirements.txt
   ```
