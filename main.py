@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-from json import load
+# from json import load
 import environment
+from yaml import safe_load
 from threading import Event
 from assistant import AssistantWindow
 from utility import timeNow, weekDayToday, notify
@@ -9,16 +10,16 @@ from multiprocessing import Process, set_start_method
 
 
 """ global declarations """
+dataFile = 'data.yaml'
 attendeeName = 'User'  # attendee's name
 meetings = {}  # stores meeting objects indexed by meeting time
-dataFile = 'data.json'
 
 
 def readData():
     """ reads the attendee name & meetings schedule from `data.json` """
     global attendeeName, meetings
-    with open(dataFile) as jsonData:
-        data = load(jsonData)
+    with open(dataFile) as yamlData:
+        data = safe_load(yamlData)
     attendeeName = data['attendee-name']
     meetings = data['meetings']
 

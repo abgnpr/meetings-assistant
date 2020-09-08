@@ -45,23 +45,23 @@ attendee-name: John Doe
 
 meetings:
 
-	09:00:
-		name: Sample meeting 1
-		id: 2813176975
-		pswd: xxxxxx
-		days:
-			- Monday
-			- Wednesday
-			- Friday
+    09:00:
+        name: Sample meeting 1
+        id: 2813176975
+        pswd: xxxxxx
+        days:
+            - Monday
+            - Wednesday
+            - Friday
 
-	10:30:
-		name: Sample meeting 2
-		id: 7709185120
-		pswd: yyyyyyy
-		days: everyday
+    10:30:
+        name: Sample meeting 2
+        id: 7709185120
+        pswd: yyyyyyy
+        days: everyday
 
 
-	# ... and more
+  # ... add more
 ```
 
 **Notes**
