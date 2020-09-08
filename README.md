@@ -1,10 +1,16 @@
 # Meetings assistant
 
-A service that notifies about, and assists in attending, your daily online meetings.
+A service that assists in attending your daily online meetings.
 
 Platform: Linux _(graphical ones)_
 
+
+
 ![Overview](images/overview.svg)
+
+## Target Users 
+
+Oblivious people like me who sit in front of their systems for the whole day but tend to forget their meetings.  
 
 ## Installation
 
