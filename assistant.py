@@ -1,7 +1,7 @@
 import environment
 from tkinter import Tk, Frame, Label, Button, TRUE, LEFT, RIGHT, X, Y
 from logger import log
-from webbrowser import open_new
+import webbrowser
 
 
 class AssistantWindow(Frame):
@@ -34,7 +34,7 @@ class AssistantWindow(Frame):
 
     def openBrowser(self):
         """ opens the browser with meeting url and id """
-        open_new('https://zoom.us/wc/join/' + self.meeting['id'])
+        webbrowser.open('https://zoom.us/wc/join/' + self.meeting['id'], autoraise=True)
         self.join.configure(text="Join again ↻")
 
 
