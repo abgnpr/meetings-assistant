@@ -45,7 +45,7 @@ attendee-name: John Doe
 
 meetings:
 
-    09:00:
+    '09:00':
         name: Sample meeting 1
         id: 2813176975
         pswd: xxxxxx
@@ -54,7 +54,7 @@ meetings:
             - Wednesday
             - Friday
 
-    10:30:
+    '10:30':
         name: Sample meeting 2
         id: 7709185120
         pswd: yyyyyyy
@@ -66,9 +66,11 @@ meetings:
 
 **Notes**
 
-- Meeting times must be 4 digit representations `HH:MM`.
-  Preceding 0s for single digit hours and minutes are necessary.
+- Meeting times must be quoted `'HH:MM'`
 
+- Meeting times must be 4 digit representations `HH:MM`.
+  Preceding 0 is necessary for single digit hours and minutes. This is wrong: `10:2`; this is right: `10:02`.
+  
 - Valid values for `days`
   - list<br>
     `- Monday`<br>
