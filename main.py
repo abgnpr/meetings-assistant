@@ -34,28 +34,37 @@ if __name__ == "__main__":
     """ Interval Loop:
     checks for meetings every minute and 
     launches meeting assistant if one is 
-    scheduled for the current time
+    scheduled for the current time & day
     """
     e = Event()
-    interval = 60  # sec
+    interval = 2  # sec
     while not e.wait(interval):
-        
+
         # read data.json
         readData()
-        
+
         t = timeNow()
-        if t in meetings.keys() and (
-            weekDayToday() in meetings[t]['days']
-            or meetings[t]['days'].lower() == 'everyday'
-        ):
-            
-            # notify about the meeting
-            notify(meetings[t])
-            
-            # start AssistantWindow as a new process
-            aw = Process(
-                target=AssistantWindow,
-                args=(meetings[t], attendeeName)
-            )
-            aw.start()
-            aw.join()  # wait for assistant window to terminate
+        d = weekDayToday()
+
+        for meeting in meetings:
+            if t == meeting['time'] and (
+                (
+                    type(meeting['days']) == list 
+                    and d in meeting['days']
+                ) or (
+                    type(meeting['days']) == str 
+                    and meeting['days'].lower() == 'everyday'
+                )
+            ):
+                # notify about the meeting
+                notify(meeting)
+
+                # start AssistantWindow as a new process
+                aw = Process(
+                    target=AssistantWindow,
+                    args=(meeting, attendeeName)
+                )
+                aw.start()
+                aw.join()  # wait for assistant window to terminate
+
+                break
