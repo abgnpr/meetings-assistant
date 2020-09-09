@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import environment
 from yaml import safe_load
 from threading import Event
