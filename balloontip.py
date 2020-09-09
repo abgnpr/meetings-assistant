@@ -28,7 +28,7 @@ class BalloonTip:
         
         
     def show(self, title, msg):
-        """ Shows ballon tip """
+        """ Shows balloon notification """
         self.hwnd = CreateWindow(
             self.classAtom, "Taskbar", self.style, 0, 0, win32con.CW_USEDEFAULT, win32con.CW_USEDEFAULT, 0, 0, self.hinst, None
         )
@@ -37,7 +37,7 @@ class BalloonTip:
         Shell_NotifyIcon(NIM_ADD, self.nid)
         Shell_NotifyIcon(NIM_MODIFY,(
             self.hwnd, 0, NIF_INFO, win32con.WM_USER+20, self.hicon, 
-            "Balloon tooltip",title,200,msg
+            "Balloon tip",title,200,msg
             )
         )
 
