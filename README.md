@@ -2,7 +2,9 @@
 
 A service to assist you in attending your daily online meetings.
 
-Platform: Linux _(graphical)_
+Status : Working on it
+
+Platform: Windows
 
 For: Oblivious people like me who sit in front of their systems for the whole day and tend to forget their meetings.
 
