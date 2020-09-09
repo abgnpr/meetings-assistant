@@ -31,9 +31,6 @@ def notify(meeting):
 if __name__ == "__main__":
 
     set_start_method('spawn')
-    # this is a unix exclusive multiprocessing start method.
-    # Make AssistantWindow work with set_start_method('spawn')
-    # to enable platform independance.
 
     """ Interval Loop:
     checks for meetings every minute and 
@@ -41,7 +38,7 @@ if __name__ == "__main__":
     scheduled for the current time & day
     """
     e = Event()
-    interval = 60  # sec
+    interval = 0  # sec
     while not e.wait(interval):
 
         # read data.json
@@ -49,6 +46,9 @@ if __name__ == "__main__":
 
         t = timeNow()
         d = weekDayToday()
+
+        t = '09:00'
+        d = 'Monday'
 
         for meeting in meetings:
             if t == meeting['time'] and (
