@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-from notify2 import init, Notification
 import environment
 from yaml import safe_load
 from threading import Event
+from balloontip import BalloonTip
 from assistant import AssistantWindow
 from utility import timeNow, weekDayToday
 from multiprocessing import Process, set_start_method
@@ -13,7 +13,7 @@ from multiprocessing import Process, set_start_method
 dataFile = 'data.yaml'
 attendeeName = 'User'  # attendee's name
 meetings = {}  # stores meeting objects indexed by meeting time
-
+notificationBalloon = BalloonTip()
 
 def readData():
     """ reads the attendee name & meetings schedule from `data.json` """
@@ -26,17 +26,13 @@ def readData():
 
 def notify(meeting):
     """ generates meeting notification """
-    init('Meetings Assistant')
-    Notification(
-        summary='Meeting Reminder', 
-        message=meeting['name']
-    ).show()
+    notificationBalloon.show('Meeting Reminder', meeting['name'])
 
 
 # driver
 if __name__ == "__main__":
 
-    set_start_method('fork')
+    set_start_method('spawn')
     # this is a unix exclusive multiprocessing start method.
     # Make AssistantWindow work with set_start_method('spawn')
     # to enable platform independance.
