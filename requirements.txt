@@ -1,3 +1,2 @@
-notify2
 PyYAML
-
+pywin32
