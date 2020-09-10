@@ -2,11 +2,7 @@
 
 A service to assist you in attending your daily online meetings.
 
-Status : Working on it
-
 Platform: Windows
-
-For: Oblivious people like me who sit in front of their systems for the whole day and tend to forget their meetings.
 
 ## What it does
 
@@ -14,12 +10,12 @@ For: Oblivious people like me who sit in front of their systems for the whole da
 
 When it's time for a meeting,
 
-- The meeting-assistant service:
+- ###### The background process:
 
-  - shows a reminder notification, and
+  - shows a balloon notification, and
   - opens an assistant window
 
-- The assistant window:
+- ###### The assistant window:
 
   - loads a meeting according to the schedule
   - opens the browser at the appropriate meeting join page (according to the id)
@@ -33,45 +29,58 @@ When it's time for a meeting,
 
 ## Installation
 
-- python (get a distribution that supports `tkinter`)
+- Ensure you have python installed (>=version3.5 ). Check using
 
-  ```bash
-  sudo apt-get install python3-tk
+  ```powershell
+  python -V
   ```
 
-- scripts
 
-  ```bash
-  git clone https://github.com/mountAP/meetings-assistant.git
-  cd meetings-assistant
-  pip3 install -r requirements.txt
+
+- Launch PowerShell or *pwsh* **as administrator**
+
+- Download and setup Meetings Assistant
+
+  ```powershell
+  git clone --single-branch --branch windows https://github.com/mountAP/meetings-assistant.git
+  
+  CD meetings-assistant
+  
+  pip install -r requirements.txt
   ```
 
-- service
+- Enable it as a startup program
 
-  ```bash
-  ./installer.sh --install
+  ```powershell
+  .\installer.ps1 -i
   ```
 
-- check status
+  *Note:* To run `installer.ps1` on older versions (<6.0) of PowerShell you'll first need to un-restrict script execution by using
 
-  ```bash
-  systemctl status meetings-assistant
+  ```powershell
+  Set-ExecutionPolicy Unrestricted # Press A and hit Enter
   ```
+  
 
 ## Schedule your meetings
 
-You can modify **`data.yaml`** and add any number of meetings to the list.
+You can modify **`data.yaml`** located in `meetings-assistant/` and add any number of meetings to the list.
 
 **Note**
 
-- Meeting time must be quoted `'HH:MM'`
+- Meeting **time** `'HH:MM'`
 
-- Meeting time must be in 4 digit representation `HH:MM`.
+  - must follow 24 hour format
 
-- Preceding 0 is necessary for single digit hours and minutes. These are wrong: `10:2`, `4:25`; these are right: `10:02`, `04:25`.
+  - must be within single or double quotes 
 
-- Valid values for `days`
+  - must be in 4 digit representation; preceding 0 is must for single digit hours and minutes. 
+
+  Wrong: `10:2`, `4:25`, `12:50` 
+
+  Right: `'10:02'`, `"04:25"`, `'12:50'`
+
+- Valid values for **days**
   - a list of unquoted weekday names<br>
     `- Monday`<br>
     `- Tuesday`<br>
@@ -81,6 +90,8 @@ You can modify **`data.yaml`** and add any number of meetings to the list.
     `[ 'Monday', 'Tuesday', ..., 'Sunday' ]`
   - a string value
     `'everyday'` or `'Everyday'`
+  
+- Names, ids, passwords & days in list format need not have quotes, but you may use if you like.
 
 ```yaml
 # data.yaml
@@ -115,7 +126,7 @@ meetings:
 
 ## Attendance Log
 
-Attendance sheet **`attendance-log.csv`** can be found inside `meetings-assistant/` folder. It can be viewed using any spreadsheet software.
+Attendance sheet **`attendance-log.csv`** will be created in `meetings-assistant/` folder after you attend/miss your first meeting. View it using any spreadsheet software.
 
 ## Test
 
