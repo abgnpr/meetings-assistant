@@ -13,6 +13,7 @@ Options
 if ($args.Count -eq 1) {
     switch ($args[0]) {
         "-i" {
+            # creates a startup shortcut
             $WshShell = New-Object -ComObject WScript.Shell
             $shortCut = $WshShell.CreateShortcut("$startupFolder\Meetings Assistant.lnk")
             $shortCut.TargetPath = $python
@@ -23,6 +24,7 @@ if ($args.Count -eq 1) {
             Break
         }
         "-u" {
+            # deletes the startup shortcut
             Remove-Item -Path "$startupFolder\Meetings Assistant.lnk"
             Break
         }
