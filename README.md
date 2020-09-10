@@ -52,7 +52,7 @@ When it's time for a meeting,
 - check status
 
   ```bash
-  systemctl status meetings-assistant
+  systemctl status meetings-assistant --no-pager
   ```
 
 ## Schedule your meetings
