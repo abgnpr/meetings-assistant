@@ -1,7 +1,7 @@
 import environment
 from yaml import safe_load
+from notification import notify
 from threading import Event, Thread
-from balloontip import BalloonTip
 from assistant import AssistantWindow
 from utility import timeNow, weekDayToday
 from multiprocessing import Process, set_start_method
@@ -11,7 +11,6 @@ from multiprocessing import Process, set_start_method
 dataFile = 'data.yaml'
 attendeeName = 'User'  # attendee's name
 meetings = {}  # stores meeting objects indexed by meeting time
-notificationBalloon = BalloonTip()
 
 
 def readData():
@@ -23,16 +22,12 @@ def readData():
     meetings = data['meetings']
 
 
-def notify(meeting):
-    """ generates meeting notification """
-    notificationBalloon.show('Meeting Reminder', meeting['name'])
-
-
-def spawn(f, args):
+def spawn(f, args, wait=False):
     """ Spawns function as a new process  """
     p = Process(target=f, args=args)
     p.start()
-    p.join()
+    if wait:
+        p.join()
 
 
 # driver
@@ -58,6 +53,6 @@ if __name__ == "__main__":
                 (type(meeting['days']) == list and d in meeting['days']) or 
                 (type(meeting['days']) == str and meeting['days'].lower() == 'everyday')
             ):
-                notify(meeting)
-                spawn(AssistantWindow, args=(meeting, attendeeName))
+                spawn(notify, args=("Meeting Reminder", meeting['name']))
+                spawn(AssistantWindow, args=(meeting, attendeeName), wait=True)
                 break
