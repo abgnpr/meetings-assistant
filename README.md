@@ -73,10 +73,10 @@ You can modify **`data.yaml`** located in `meetings-assistant/` and add any numb
 
 - Valid values for **days**
 
-  - a list of unquoted weekday names
-    `- Monday`
-    `- Tuesday`
-    `...`
+  - a list of unquoted weekday names<br>
+    `- Monday`<br>
+    `- Tuesday`<br>
+    `...`<br>
     `- Sunday`
   - an array of quoted weekday names `[ 'Monday', 'Tuesday', ..., 'Sunday' ]`
   - a string value `'everyday'` or `'Everyday'`
