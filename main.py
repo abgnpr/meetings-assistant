@@ -1,6 +1,7 @@
+import os
 import environment
 from yaml import safe_load
-from threading import Event
+from threading import Event, Thread
 from balloontip import BalloonTip
 from assistant import AssistantWindow
 from utility import timeNow, weekDayToday
@@ -12,6 +13,7 @@ dataFile = 'data.yaml'
 attendeeName = 'User'  # attendee's name
 meetings = {}  # stores meeting objects indexed by meeting time
 notificationBalloon = BalloonTip()
+
 
 def readData():
     """ reads the attendee name & meetings schedule from `data.json` """
@@ -60,6 +62,7 @@ if __name__ == "__main__":
                     and meeting['days'].lower() == 'everyday'
                 )
             ):
+
                 # notify about the meeting
                 notify(meeting)
 
@@ -71,4 +74,5 @@ if __name__ == "__main__":
                 aw.start()
                 aw.join()  # wait for assistant window to terminate
 
-                break
+                # break
+                exit()
