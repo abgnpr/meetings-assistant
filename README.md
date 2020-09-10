@@ -64,7 +64,7 @@ When it's time for a meeting,
 
 ## Schedule your meetings
 
-You can modify **`data.yaml`** located in `meetings-assistant/` and add any number of meetings to the list.
+You can modify **`data.yaml`** located in `meetings-assistant\` and add any number of meetings to the list.
 
 **Note**
 
@@ -117,7 +117,7 @@ meetings:
   - name: Sample meeting 3
     id: 7709185120
     pswd: zzzzzzz
-    time: '04:15'
+    time: '16:15' # <---- 4:15 pm
     days: ['Tuesday', 'Thursday'] # <---- quotes important!
 
 
@@ -126,8 +126,23 @@ meetings:
 
 ## Attendance Log
 
-Attendance sheet **`attendance-log.csv`** will be created in `meetings-assistant/` folder after you attend/miss your first meeting. View it using any spreadsheet software.
+Attendance sheet **`attendance-log.csv`** will be created in `meetings-assistant\` folder after you attend/miss your first meeting. View it using any spreadsheet software.
 
 ## Test
 
 To test if it's working, schedule a test meeting in the next 1-2 minutes and see if the Assistant Window shows up.
+
+## Caveats
+
+- Currently works only for Zoom users
+- Meetings Assistant is intended to be used with browser. If you already have the app in your system, you may be redirected to it. Behaviour may or may not be as expected. We are working on it.
+
+## Uninstall
+
+Inside `meetings-assistant\` folder
+
+```bash
+.\installer.ps1 -u
+```
+
+This removes the meetings assistant startup program from the system. 
