@@ -1,4 +1,3 @@
-import os
 import environment
 from yaml import safe_load
 from threading import Event, Thread
@@ -29,6 +28,13 @@ def notify(meeting):
     notificationBalloon.show('Meeting Reminder', meeting['name'])
 
 
+def spawn(f, args):
+    """ Spawns function as a new process  """
+    p = Process(target=f, args=args)
+    p.start()
+    p.join()
+
+
 # driver
 if __name__ == "__main__":
 
@@ -40,39 +46,18 @@ if __name__ == "__main__":
     scheduled for the current time & day
     """
     e = Event()
-    interval = 0  # sec
+    interval = 60  # sec
     while not e.wait(interval):
-
-        # read data.json
         readData()
 
         t = timeNow()
         d = weekDayToday()
 
-        t = '09:00'
-        d = 'Monday'
-
         for meeting in meetings:
             if t == meeting['time'] and (
-                (
-                    type(meeting['days']) == list
-                    and d in meeting['days']
-                ) or (
-                    type(meeting['days']) == str
-                    and meeting['days'].lower() == 'everyday'
-                )
+                (type(meeting['days']) == list and d in meeting['days']) or 
+                (type(meeting['days']) == str and meeting['days'].lower() == 'everyday')
             ):
-
-                # notify about the meeting
                 notify(meeting)
-
-                # start AssistantWindow as a new process
-                aw = Process(
-                    target=AssistantWindow,
-                    args=(meeting, attendeeName)
-                )
-                aw.start()
-                aw.join()  # wait for assistant window to terminate
-
-                # break
-                exit()
+                spawn(AssistantWindow, args=(meeting, attendeeName))
+                break
