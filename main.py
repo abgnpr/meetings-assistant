@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-from notify2 import init, Notification
 import environment
 from yaml import safe_load
 from threading import Event
 from assistant import AssistantWindow
+from notify2 import init, Notification
 from utility import timeNow, weekDayToday
 from multiprocessing import Process, set_start_method
 
@@ -37,9 +37,6 @@ def notify(meeting):
 if __name__ == "__main__":
 
     set_start_method('fork')
-    # this is a unix exclusive multiprocessing start method.
-    # Make AssistantWindow work with set_start_method('spawn')
-    # to enable platform independance.
 
     """ Interval Loop:
     checks for meetings every minute and 
@@ -58,13 +55,8 @@ if __name__ == "__main__":
 
         for meeting in meetings:
             if t == meeting['time'] and (
-                (
-                    type(meeting['days']) == list
-                    and d in meeting['days']
-                ) or (
-                    type(meeting['days']) == str
-                    and meeting['days'].lower() == 'everyday'
-                )
+                (type(meeting['days']) == list and d in meeting['days']) 
+                or (type(meeting['days']) == str and meeting['days'].lower() == 'everyday')
             ):
                 # notify about the meeting
                 notify(meeting)
