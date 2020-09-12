@@ -24,17 +24,20 @@ then
         ;;
         
         -h|--help)
-            printf "\nAvailable Options
-        -i | --install\
-          Installs Meetings Assistant service
-        -u | --uninstall\
-        Unsinstalls Meetings Assistant service
-        -h | --help\
-             Show help\n\n"
 
+        printf "\nAvailable Options
+        -i | --install         Installs Meetings Assistant service
+        -u | --uninstall       Unsinstalls Meetings Assistant service
+        -h | --help            Show help\n\n"
+        ;;
+
+        *)
+        printf "\nInvalid option, use '-h' to show help\n\n"
+        ;;
+        
     esac
 else
-    printf "Invalid option(s), use '-h' to show help\n"
+    printf "\nNo options specified, use '-h' to show help\n\n"
 fi
 
 
